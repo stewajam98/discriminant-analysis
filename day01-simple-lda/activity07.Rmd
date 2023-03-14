@@ -1,0 +1,8 @@
+---
+title: "Activity 7 - Linear Discriminant Analysis"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```

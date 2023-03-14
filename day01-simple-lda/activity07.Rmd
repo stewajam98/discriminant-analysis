@@ -3,6 +3,53 @@ title: "Activity 7 - Linear Discriminant Analysis"
 output: github_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(tidymodels)
+```
+
+## Loading in the data
+```{R}
+resume <- readr::read_csv("https://www.openintro.org/data/csv/resume.csv")
+```
+
+  1. the log(year_experience) more satisfies the assumption that the distribution of X given Y is approximately normal. This is because it more closely looks like a bell curve that isn't skewed in either direction.
+  
+## Fitting the model
+```{R}
+# convert received_callback to a factor with more informative levels
+resume <- resume %>%
+  mutate(received_callback = factor(received_callback, labels = c("No", "Yes")))
+
+# LDA
+library(discrim)
+lda_years <- discrim_linear() %>%
+  set_mode("classification") %>%
+  set_engine("MASS") %>%
+  fit(received_callback ~ log(years_experience), data = resume)
+
+lda_years
+```
+
+  - when looking at the output, you can see that the group means for those who received a callback is slightly higher (but not by much) than those who didn't receive a callback. This corresponds to what is shown in the graph provided.
+  
+## predicting likelihood of callbacks
+
+The following chunk provides probabilities for both yes and no on every resume in the data set.
+```{R}
+predict(lda_years, new_data = resume, type = "prob")
+```
+
+This code chunk creates a confusion matrix to visually asses the model's predictions.
+```{R}
+augment(lda_years, new_data = resume) %>%
+  conf_mat(truth = received_callback, estimate = .pred_class)
+```
+  - when looking at this output, it appears that it predicted that every resume would not get a callback. This is most likely due to it being a probability and then it taking the highest probability (which in all cases is no).
+  
+This segment will address the accuracy of our model
+```{R}
+augment(lda_years, new_data = resume) %>%
+  accuracy(truth = received_callback, estimate = .pred_class)
 ```

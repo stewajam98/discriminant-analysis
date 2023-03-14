@@ -84,9 +84,14 @@ data](https://www.openintro.org/data/index.php?data=resume):
 Linear discriminate analysis (LDA) is another method for classification
 problems. For LDA, we make assumptions about the distribution of the
 explanatory/independent variable(s) given the response/dependent
-variable (e.g., $X | Y \sim \text{Normal}$). This method then uses
-Bayes’ theorem to build a classifier for the likelihood of belonging to
-one of the levels of the response variable.
+variable (e.g., $X | Y \sim \text{Normal}$). Note that because of this
+assumption, LDA will only work with qualitative explanatory variables.
+Also note that because of logistic regression, [some believe (like the
+great Dr. Frank
+Harrell)](https://github.com/gvsu-sta631/activity07-discriminant-analysis)
+that LDA is obsolete. This method then uses Bayes’ theorem to build a
+classifier for the likelihood of belonging to one of the levels of the
+response variable.
 
 For this activity, we will perform an LDA for the explanatory variable
 `years_experience` and response variable `received_callback`.
@@ -185,23 +190,10 @@ the “No” rate in the response variable
 | No                | 4478 | 0.92 |
 | Yes               |  392 | 0.08 |
 
-## Challenge 1: Compare with logistic regression
+## Challenge: Compare with logistic regression
 
 Fit a similar model as we just explored, but instead using logistic
 regression. Discuss how the results are similar and different.
-
-## Challenge 2: LDA with multiple explanatory variables
-
-Fit an LDA model similar to the one you explored in Day 2 of Activity 6.
-In that activity, you fit:
-
-$$
-\begin{equation*}
-\log\left(\frac{\hat{p}}{1-\hat{p}}\right) = \hat\beta_0 + \hat\beta_1 \times (\texttt{years\\_experience}) + \hat\beta_2 \times (\texttt{race:White}) + \hat\beta_3 \times (\texttt{sex:male})
-\end{equation*}
-$$
-
-Discuss how the results are similar and different.
 
 ## What is next?
 
